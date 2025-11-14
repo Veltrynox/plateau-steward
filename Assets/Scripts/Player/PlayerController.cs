@@ -8,11 +8,11 @@ namespace SubnauticaClone
     {
         [SerializeField] private float moveForce = 10f;
         [SerializeField] private float drag = 2f;
-        [SerializeField] private float verticalForce = 1f;
+        // [SerializeField] private float verticalForce = 1f;
 
         private Rigidbody rb;
         private Vector2 moveInput;
-        private float verticalInput;
+        // private float verticalInput;
         private Transform cam;
 
         private void Awake()
@@ -30,10 +30,10 @@ namespace SubnauticaClone
             moveInput = value.Get<Vector2>();
         }
 
-        private void OnVertical(InputValue value)
-        {
-            verticalInput = value.Get<float>();
-        }
+        // private void OnVertical(InputValue value)
+        // {
+        //     verticalInput = value.Get<float>();
+        // }
 
         private void FixedUpdate()
         {
@@ -47,18 +47,18 @@ namespace SubnauticaClone
             moveDir.Normalize();
 
             // Vertical movement (E/Q)
-            Vector3 verticalDir = Vector3.up * verticalInput;
+            // Vector3 verticalDir = Vector3.up * verticalInput;
 
-            Vector3 horizontalDir =
+            Vector3 movementDirection =
                 cam.forward * moveInput.y +
                 cam.right * moveInput.x;
-            horizontalDir.Normalize();
+            movementDirection.Normalize();
 
-            if (horizontalDir.sqrMagnitude > 0.001f)
-                rb.AddForce(horizontalDir * moveForce, ForceMode.Acceleration);
+            if (movementDirection.sqrMagnitude > 0.001f)
+                rb.AddForce(movementDirection * moveForce, ForceMode.Acceleration);
 
-            if (Mathf.Abs(verticalInput) > 0.001f)
-                rb.AddForce(verticalDir * verticalForce, ForceMode.Acceleration);
+            // if (Mathf.Abs(verticalInput) > 0.001f)
+            //     rb.AddForce(verticalDir * verticalForce, ForceMode.Acceleration);
         }
     }
 }

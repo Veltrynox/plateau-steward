@@ -37,7 +37,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -489,17 +489,6 @@
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "Invert",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Vertical",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ec7c8927-fb69-4b84-b385-5564a39cf818",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Vertical",
                     "isComposite": false,
