@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 7025494047860670223}
   - component: {fileID: 3065934401544214330}
   - component: {fileID: 99042121906076203}
+  - component: {fileID: 1401435229208833326}
+  - component: {fileID: 4776547978995139099}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -157,7 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.PlayerInput
   m_Actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 1
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -188,6 +190,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CapsuleController
   moveForce: 10
   drag: 1
+--- !u!114 &1401435229208833326
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179059432709530513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0209bcd710041d8b911f462ecd9668, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubnauticaClone.Inventory
+  capacity: 20
+  items: []
+--- !u!114 &4776547978995139099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179059432709530513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff3a0edde26f4766a126f80d32e5b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Interactor
+  interactDistance: 3
 --- !u!1 &8995006441349418437
 GameObject:
   m_ObjectHideFlags: 0
