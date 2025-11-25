@@ -17,21 +17,5 @@ namespace SubnauticaClone
                     Destroy(gameObject);
             }
         }
-
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                Inventory inventory = other.GetComponent<Inventory>();
-                if (inventory != null)
-                {
-                    bool pickedUp = inventory.AddItem(itemData, quantity);
-                    if (pickedUp)
-                    {
-                        Destroy(gameObject);
-                    }
-                }
-            }
-        }
     }
 }

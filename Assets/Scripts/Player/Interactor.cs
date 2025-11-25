@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Handles player interaction with interactable objects in the game world.
+/// </summary>
+
 public class Interactor : MonoBehaviour
 {
     public float interactDistance = 3f;

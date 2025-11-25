@@ -16,33 +16,33 @@ public class InventoryItem
 
 namespace SubnauticaClone
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : SingletonBase<Inventory>
     {
         public int capacity = 20;
         public List<InventoryItem> items = new List<InventoryItem>();
 
-        void Awake()
+        protected override void Awake()
         {
-            if (items == null)
-            {
-                items = new List<InventoryItem>(capacity);
-            }
-            else if (items.Capacity < capacity)
-            {
+            base.Awake();
+            if (Instance != this) return;
+ 
+            if (items.Capacity < capacity)
                 items.Capacity = capacity;
-            }
         }
+
         public bool AddItem(ItemData item, int quantity)
         {
-            // Check if item is stackable and already in inventory
-            InventoryItem existingItem = items.Find(i => i.itemData == item && i.itemData.maxStack > 1);
+            InventoryItem existingItem = items.Find(i =>
+                i.itemData == item &&
+                i.itemData.maxStack > 1
+            );
+
             if (existingItem != null)
             {
                 existingItem.quantity += quantity;
                 return true;
             }
 
-            // Check if there's space
             if (items.Count >= capacity)
             {
                 Debug.Log("Inventory full!");

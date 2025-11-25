@@ -4,8 +4,18 @@ using UnityEngine.InputSystem;
 namespace SubnauticaClone
 {
     [RequireComponent(typeof(Rigidbody))]
-    public class CapsuleController : MonoBehaviour
+    public class Player : MonoBehaviour
     {
+        private GameObject m_PlayerHUD;
+        private GameObject m_LevelGUI;
+
+        public void Construct(GameObject hud, GameObject gui, Transform spawnPoint)
+        {
+            m_PlayerHUD = hud;
+            m_LevelGUI = gui;
+            transform.position = spawnPoint.position;
+        }
+
         [SerializeField] private float moveForce = 10f;
         [SerializeField] private float drag = 2f;
         // [SerializeField] private float verticalForce = 1f;
@@ -34,6 +44,17 @@ namespace SubnauticaClone
         // {
         //     verticalInput = value.Get<float>();
         // }
+
+        private void OnInventory(InputValue value)
+        {
+            if (m_LevelGUI == null)
+                return;
+
+            // Find your InventoryUI component inside GUI
+            var inventory = m_LevelGUI.GetComponentInChildren<InventoryUI>(true);
+            if (inventory != null)
+                inventory.Toggle();
+        }
 
         private void FixedUpdate()
         {
