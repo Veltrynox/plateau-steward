@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b3cee83ea4fa4167b3e6a9f806bb77b, type: 3}
+  m_Name: ScraperWedge_R
+  m_EditorClassIdentifier: Assembly-CSharp::RecipeData
+  recipeName: The Scraper Wedge
+  icon: {fileID: 21300000, guid: 0661ca65d50104e74b190b2e70aa9a02, type: 3}
+  resultItem: {fileID: 11400000, guid: 8710f331eb22844bdab600cc07fff8ac, type: 2}
+  resultAmount: 1
+  ingredients:
+  - item: {fileID: 11400000, guid: a8eb54220458e4671830c0145dfff66d, type: 2}
+    amount: 1
+  - item: {fileID: 11400000, guid: 810b9ab08c4d84dacbafd4e7814c2939, type: 2}
+    amount: 1

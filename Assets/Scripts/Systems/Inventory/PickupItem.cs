@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace SubnauticaClone
 {
+    /// <summary>
+    /// Handles picking up items from the game world and adding them to the player's inventory.
+    /// </summary>
     public class PickupItem : MonoBehaviour, IInteractable
     {
         public ItemData itemData;
@@ -9,12 +12,13 @@ namespace SubnauticaClone
 
         public void Interact(GameObject interactor)
         {
-            Inventory inventory = interactor.GetComponent<Inventory>();
-            if (inventory != null)
+            InventoryManager inventoryManager = interactor.GetComponent<InventoryManager>();
+            if (inventoryManager != null)
             {
-                bool pickedUp = inventory.AddItem(itemData, quantity);
-                if (pickedUp)
+                if (inventoryManager.AddItem(itemData, quantity))
+                {
                     Destroy(gameObject);
+                }
             }
         }
     }

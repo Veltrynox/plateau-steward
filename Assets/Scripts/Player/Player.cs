@@ -3,16 +3,17 @@ using UnityEngine.InputSystem;
 
 namespace SubnauticaClone
 {
+    /// <summary>
+    /// Manages the player's movement and interaction.
+    /// </summary>
     [RequireComponent(typeof(Rigidbody))]
     public class Player : MonoBehaviour
     {
         private GameObject m_PlayerHUD;
-        private GameObject m_LevelGUI;
 
-        public void Construct(GameObject hud, GameObject gui, Transform spawnPoint)
+        public void Construct(GameObject hud, Transform spawnPoint)
         {
             m_PlayerHUD = hud;
-            m_LevelGUI = gui;
             transform.position = spawnPoint.position;
         }
 
@@ -44,17 +45,6 @@ namespace SubnauticaClone
         // {
         //     verticalInput = value.Get<float>();
         // }
-
-        private void OnInventory(InputValue value)
-        {
-            if (m_LevelGUI == null)
-                return;
-
-            // Find your InventoryUI component inside GUI
-            var inventory = m_LevelGUI.GetComponentInChildren<InventoryUI>(true);
-            if (inventory != null)
-                inventory.Toggle();
-        }
 
         private void FixedUpdate()
         {

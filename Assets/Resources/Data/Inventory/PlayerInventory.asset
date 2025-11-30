@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31cf4a80ee1146eb813eb63c5ecaa68, type: 3}
+  m_Name: PlayerInventory
+  m_EditorClassIdentifier: Assembly-CSharp::SubnauticaClone.Inventory
+  capacity: 20
+  items:
+  - itemData: {fileID: 11400000, guid: a8eb54220458e4671830c0145dfff66d, type: 2}
+    quantity: 1
+  - itemData: {fileID: 11400000, guid: e7c854863a3874198bb4e9a81c36b7f4, type: 2}
+    quantity: 1
+  - itemData: {fileID: 11400000, guid: 3406c45a3836f4c3cb140c90c2e64ff5, type: 2}
+    quantity: 1
+  - itemData: {fileID: 11400000, guid: 01340bec21c384065ae506e8b9ae1ba5, type: 2}
+    quantity: 1
+  - itemData: {fileID: 11400000, guid: 6bd52300087914708ba36f34bfa6121e, type: 2}
+    quantity: 1
