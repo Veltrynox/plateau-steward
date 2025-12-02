@@ -4,30 +4,37 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Handles player interaction with interactable objects in the game world.
 /// </summary>
-
-public class Interactor : MonoBehaviour
+namespace SubnauticaClone
 {
-    public float interactDistance = 3f;
-    private Transform cam;
-
-    private void Awake()
+    public class Interactor : MonoBehaviour
     {
-        cam = Camera.main != null ? Camera.main.transform : null;
-    }
+        public float interactDistance = 3f;
+        private Transform cam;
 
-    private void OnInteract(InputValue value)
-    {
-        if (value.isPressed)
+        private void Awake()
         {
-            Ray ray = new Ray(cam.position, cam.forward);
-            if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
+            cam = Camera.main != null ? Camera.main.transform : null;
+        }
+
+        private void OnInteract(InputValue value)
+        {
+            if (value.isPressed)
             {
-                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-                if (interactable != null)
+                Ray ray = new Ray(cam.position, cam.forward);
+                if (Physics.Raycast(ray, out RaycastHit hit, interactDistance))
                 {
-                    interactable.Interact(gameObject);
+                    IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                    if (interactable != null)
+                    {
+                        interactable.Interact(gameObject);
+                    }
                 }
             }
         }
     }
+}
+
+interface IInteractable
+{
+    void Interact(GameObject interactor);
 }
