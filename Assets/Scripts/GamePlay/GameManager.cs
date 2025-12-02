@@ -1,7 +1,7 @@
 using System;
-using SubnauticaClone;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Manages the overall game state, including pausing and unpausing.
@@ -16,7 +16,10 @@ namespace SubnauticaClone
         protected override void Awake()
         {
             base.Awake();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
             IsPaused = false;
+            Time.timeScale = 1;
         }
 
         private void OnEnable()
@@ -55,6 +58,26 @@ namespace SubnauticaClone
         private void TogglePause(InputAction.CallbackContext context)
         {
             TogglePause();
+        }
+
+        public void GameOver()
+        {
+            Debug.Log("Game Over!");
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            OnPauseStateChanged?.Invoke(true);
+        }
+
+        internal void QuitGame()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void LoadScene()
+        {
+            string currentSceneName = SceneManager.GetActiveScene().name;
+            SceneManager.LoadScene(currentSceneName);
         }
     }
 }
