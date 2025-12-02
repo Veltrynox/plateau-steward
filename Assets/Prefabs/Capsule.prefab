@@ -15,8 +15,9 @@ GameObject:
   - component: {fileID: 7025494047860670223}
   - component: {fileID: 3065934401544214330}
   - component: {fileID: 99042121906076203}
-  - component: {fileID: 1401435229208833326}
   - component: {fileID: 4776547978995139099}
+  - component: {fileID: 82615162755110241}
+  - component: {fileID: 8255032828795841001}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -190,20 +191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CapsuleController
   moveForce: 10
   drag: 1
---- !u!114 &1401435229208833326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5179059432709530513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf0209bcd710041d8b911f462ecd9668, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SubnauticaClone.Inventory
-  capacity: 20
-  items: []
 --- !u!114 &4776547978995139099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,6 +204,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interactor
   interactDistance: 3
+--- !u!114 &82615162755110241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179059432709530513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01902191619654f4b8232571fd35f848, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubnauticaClone.OxygenSystem
+  maxOxygen: 100
+  oxygenDepletionAmount: 15
+  depletionInterval: 1
+--- !u!114 &8255032828795841001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5179059432709530513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4212d68bc982c41de82e0975796b6601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubnauticaClone.InventoryManager
+  inventory: {fileID: 11400000, guid: 9dd5bca5b8d0f4a9b9247701002b5dbb, type: 2}
+  gameplayMapName: Player
+  uiMapName: UI
 --- !u!1 &8995006441349418437
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,6 +246,7 @@ GameObject:
   - component: {fileID: 6650207702941922114}
   - component: {fileID: 8878018910958928328}
   - component: {fileID: 7415549996938546578}
+  - component: {fileID: 8056045303927939295}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -245,7 +263,7 @@ Transform:
   m_GameObject: {fileID: 8995006441349418437}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: -10}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -354,3 +372,17 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &8056045303927939295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995006441349418437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d50a4195ce2d48aabc4fb195dc633bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SubnauticaClone.CameraLook
+  playerBody: {fileID: 8585462958816416318}
+  sensitivity: 100
