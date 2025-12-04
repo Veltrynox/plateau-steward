@@ -48,6 +48,7 @@ namespace SubnauticaClone
         private void HandleOxygenDepletion()
         {
             Debug.Log("Oxygen depleted! Take action!");
+            GameManager.Instance.GameOver();
         }
 
         public void ReplenishOxygen(int amount)

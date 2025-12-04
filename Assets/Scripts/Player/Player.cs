@@ -11,10 +11,11 @@ namespace SubnauticaClone
     {
         private GameObject m_PlayerHUD;
 
-        public void Construct(GameObject hud, Transform spawnPoint)
+        public void Construct(GameObject hud, Quaternion rotation, Vector3 position)
         {
             m_PlayerHUD = hud;
-            transform.position = spawnPoint.position;
+            transform.rotation = rotation;
+            transform.position = position;
         }
 
         [SerializeField] private float moveForce = 10f;
