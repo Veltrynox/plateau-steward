@@ -15,7 +15,7 @@ namespace SubnauticaClone
         [SerializeField] private Inventory m_inventory;
         [SerializeField] private InventoryUI m_inventoryUI;
 
-        private Transform m_GridParent;
+        private Transform m_gridParent;
 
         private void Awake()
         {
@@ -23,11 +23,11 @@ namespace SubnauticaClone
 
             if (grid != null)
             {
-                m_GridParent = grid.transform;
+                m_gridParent = grid.transform;
             }
             else
             {
-                Debug.LogError("CraftingUI: Could not find GridLayoutGroup in m_Panel children.");
+                Debug.LogError("CraftingUI: Could not find GridLayoutGroup in m_panel children.");
             }
         }
 
@@ -53,36 +53,42 @@ namespace SubnauticaClone
         private void Refresh()
         {
             // Clear previous UI
-            foreach (Transform child in m_GridParent)
+            foreach (Transform child in m_gridParent)
                 Destroy(child.gameObject);
 
             // Populate UI
             foreach (var recipe in m_recipeDatabase.allRecipes)
             {
-                var slot = Instantiate(m_slotPrefab, m_GridParent);
-                var craftingSlot = slot.GetComponent<CraftingSetup>();
-
-                // Slot setup
-                craftingSlot.craftButton.interactable = CanCraft(recipe);
-                craftingSlot.craftButton.onClick.AddListener(() => OnClickSlot(recipe, slot));
-
-                craftingSlot.SetIcon(recipe.icon);
+                var slot = Instantiate(m_slotPrefab, m_gridParent);
+                var craftingSlot = slot.GetComponent<MenuItemSetup>();
+                craftingSlot.Setup(recipe.icon);
+                bool canCraft = CanCraft(recipe);
+                craftingSlot.InteractButton.interactable = canCraft;
+                craftingSlot.InteractButton.onClick.AddListener(() => OnClickSlot(recipe));
             }
-            LayoutRebuilder.ForceRebuildLayoutImmediate(m_GridParent.GetComponent<RectTransform>());
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(m_gridParent.GetComponent<RectTransform>());
         }
 
-        public void OnClickSlot(RecipeData recipe, GameObject slot)
+        public void OnClickSlot(RecipeData recipe)
         {
             if (CanCraft(recipe))
+            {
                 CraftItem(recipe);
+            }
             else
-                Debug.Log("Cannot craft " + recipe.resultItem.itemName + ". Missing ingredients.");
+            {
+                Debug.Log($"Cannot craft {recipe.resultItem.itemName}. Missing ingredients.");
+            }
         }
 
         private bool CanCraft(RecipeData recipe)
         {
             foreach (var ingredient in recipe.ingredients)
-                if (!m_inventory.HasItem(ingredient.item, ingredient.amount)) return false;
+            {
+                if (!m_inventory.HasItem(ingredient.item, ingredient.amount))
+                    return false;
+            }
             return true;
         }
 

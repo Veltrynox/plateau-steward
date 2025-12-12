@@ -1,38 +1,31 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace SubnauticaClone
 {
-    /// <summary>
-    /// Manages the inventory UI, displaying items and quantities.
-    /// </summary>
     public class InventoryUI : MonoBehaviour
     {
         [Header("UI")]
-        public GameObject slotPrefab;
-        public GameObject panel;
-        public Inventory inventory;
+        [SerializeField] private GameObject m_slotPrefab;
+        [SerializeField] private GameObject m_panel;
+        [SerializeField] private InventoryMenu m_inventoryMenuUI;
+        [SerializeField] private Inventory m_inventory;
 
-        private Transform m_GridParent;
+        private Transform m_gridParent;
 
         private void Awake()
         {
-            var grid = panel.GetComponentInChildren<GridLayoutGroup>();
-
+            var grid = m_panel.GetComponentInChildren<GridLayoutGroup>();
             if (grid != null)
             {
-                m_GridParent = grid.transform;
+                m_gridParent = grid.transform;
             }
             else
             {
                 Debug.LogError("InventoryUI: Could not find GridLayoutGroup in children.");
             }
 
-            if (inventory == null) return;
-
-            if (panel != null)
-                panel.SetActive(false);
+            if (m_panel != null) m_panel.SetActive(false);
         }
 
         private bool isOpen = false;
@@ -40,32 +33,46 @@ namespace SubnauticaClone
         public void Toggle()
         {
             isOpen = !isOpen;
-            panel.SetActive(isOpen);
-
-            if (isOpen)
-                Refresh();
+            m_panel.SetActive(isOpen);
+            if (isOpen) Refresh();
         }
 
         public void Refresh()
         {
-            // Clear previous UI
-            foreach (Transform child in m_GridParent)
+            foreach (Transform child in m_gridParent)
                 Destroy(child.gameObject);
 
-            // Populate UI
-            foreach (var item in inventory.items)
+            foreach (var item in m_inventory.items)
             {
-                var slot = Instantiate(slotPrefab, m_GridParent);
+                var slot = Instantiate(m_slotPrefab, m_gridParent);
+                var inventorySlot = slot.GetComponent<MenuItemSetup>();
 
-                var icon = slot.GetComponent<Image>();
+                inventorySlot.Setup(item.itemData.icon, item.quantity);
 
-                var qtyText = slot.GetComponentInChildren<TextMeshProUGUI>();
+                inventorySlot.InteractButton.onClick.AddListener(() =>
+                    m_inventoryMenuUI.Open(item.itemData.itemName, () => DropItem(item))
+                );
+            }
+        }
 
-                if (item.itemData.icon != null)
-                    icon.sprite = item.itemData.icon;
+        private void DropItem(InventoryItem item)
+        {
+            m_inventory.RemoveItem(item.itemData, 1);
+            SpawnItemInWorld(item.itemData);
+            Refresh();
+        }
 
-                qtyText.text =
-                    (item.quantity > 1) ? item.quantity.ToString() : string.Empty;
+        private void SpawnItemInWorld(ItemData data)
+        {
+            var player = LevelBuilder.Instance.Player;
+            if (player != null && data.itemPrefab != null)
+            {
+                Vector3 dropPos = player.transform.position + (player.transform.forward * 1.5f) + Vector3.up;
+                Instantiate(data.itemPrefab, dropPos, Quaternion.identity);
+            }
+            else
+            {
+                Debug.LogWarning($"Cannot drop {data.itemName}: Missing Player reference or Item Prefab.");
             }
         }
     }
