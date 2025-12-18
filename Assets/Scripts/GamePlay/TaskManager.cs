@@ -32,6 +32,7 @@ namespace SubnauticaClone
             
             if (task != null)
             {
+                Debug.Log($"Attempting to complete task: {taskID}");
                 completedTaskIDs.Add(taskID);
                 Debug.Log($"Task Completed: {task.title}");
 
