@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -71,6 +72,16 @@ namespace SubnauticaClone
         {
             isPaused = false;
             Time.timeScale = 1f;
+        }
+
+        internal bool HasItem(ItemData requiredItem)
+        {
+            return inventory.HasItem(requiredItem, 1);
+        }
+
+        internal void RemoveItem(ItemData requiredItem, int v)
+        {
+            inventory.RemoveItem(requiredItem, v);
         }
     }
 }
