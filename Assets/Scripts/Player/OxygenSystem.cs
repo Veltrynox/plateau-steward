@@ -19,7 +19,7 @@ namespace SubnauticaClone
 
         private void Update()
         {
-            if (transform.position.y < -0.3)
+            if (GameManager.Instance.IsPlayerUnderwater)
             {
                 DepleteOxygen();
             }

@@ -6,10 +6,10 @@ namespace SubnauticaClone
     public class InventoryUI : MonoBehaviour
     {
         [Header("UI")]
-        [SerializeField] private GameObject slotPrefab;
+        [SerializeField] private GameObject menuItemPrefab;
         [SerializeField] private GameObject panel;
         [SerializeField] private InventoryMenu inventoryMenuUI;
-        [SerializeField] private Inventory inventory;
+        [SerializeField] private Inventory inventoryScriptableObject;
 
         private Transform m_gridParent;
 
@@ -42,9 +42,9 @@ namespace SubnauticaClone
             foreach (Transform child in m_gridParent)
                 Destroy(child.gameObject);
 
-            foreach (var item in inventory.items)
+            foreach (var item in inventoryScriptableObject.items)
             {
-                var slot = Instantiate(slotPrefab, m_gridParent);
+                var slot = Instantiate(menuItemPrefab, m_gridParent);
                 var inventorySlot = slot.GetComponent<MenuItemSetup>();
 
                 inventorySlot.Setup(item.itemData.icon, item.quantity);
@@ -57,7 +57,7 @@ namespace SubnauticaClone
 
         private void DropItem(InventoryItem item)
         {
-            inventory.RemoveItem(item.itemData, 1);
+            inventoryScriptableObject.RemoveItem(item.itemData, 1);
             SpawnItemInWorld(item.itemData);
             Refresh();
         }

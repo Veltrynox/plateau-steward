@@ -10,8 +10,13 @@ namespace SubnauticaClone
 {
     public class GameManager : SingletonBase<GameManager>
     {
+        public const float SEA_LEVEL = -0.1f;
+        public bool IsPlayerUnderwater { get; private set; }
+
         public event Action<bool> OnPauseStateChanged;
         [SerializeField] private InputAction inputAction;
+
+        private Transform playerTransform;
 
         protected override void Awake()
         {
@@ -20,6 +25,22 @@ namespace SubnauticaClone
             Cursor.visible = false;
             IsPaused = false;
             Time.timeScale = 1;
+        }
+
+        private void Start()
+        {
+            if (LevelBuilder.Instance != null && LevelBuilder.Instance.Player != null)
+            {
+                playerTransform = LevelBuilder.Instance.Player.transform;
+            }
+        }
+
+        private void Update()
+        {
+            if (playerTransform != null)
+            {
+                IsPlayerUnderwater = playerTransform.position.y < SEA_LEVEL;
+            }
         }
 
         private void OnEnable()

@@ -45,7 +45,7 @@ namespace SubnauticaClone
             Vector3 moveDir;
             float currentForce = moveForce;
 
-            if (transform.position.y < 0)
+            if (GameManager.Instance.IsPlayerUnderwater)
             {
                 rb.linearDamping = waterDrag;
                 rb.angularDamping = waterDrag;

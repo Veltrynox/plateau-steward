@@ -9,7 +9,7 @@ namespace SubnauticaClone
     public class CraftingUI : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private GameObject slotPrefab;
+        [SerializeField] private GameObject menuItemPrefab;
         [SerializeField] private GameObject panel;
         [SerializeField] private RecipeDatabase recipeDatabase;
         [SerializeField] private Inventory inventory;
@@ -59,7 +59,7 @@ namespace SubnauticaClone
             // Populate UI
             foreach (var recipe in recipeDatabase.allRecipes)
             {
-                var slot = Instantiate(slotPrefab, gridParent);
+                var slot = Instantiate(menuItemPrefab, gridParent);
                 var craftingSlot = slot.GetComponent<MenuItemSetup>();
                 craftingSlot.Setup(recipe.icon);
                 bool canCraft = CanCraft(recipe);
