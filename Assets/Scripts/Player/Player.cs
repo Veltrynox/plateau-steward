@@ -69,6 +69,7 @@ namespace SubnauticaClone
                 rightFlat.Normalize();
 
                 moveDir = forwardFlat * moveInput.y + rightFlat * moveInput.x;
+                rb.AddForce(Vector3.down * 20f, ForceMode.Acceleration);
 
                 currentForce *= walkMultiplier;
             }
