@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// ScriptableObject representing a generic collectable item in the game.
 /// </summary>
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+[CreateAssetMenu(fileName = "New Item", menuName = "PS/Inventory/Item")]
 public class ItemData : ScriptableObject
 {
     public string itemName;

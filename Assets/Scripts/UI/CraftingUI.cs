@@ -9,21 +9,21 @@ namespace SubnauticaClone
     public class CraftingUI : MonoBehaviour
     {
         [Header("References")]
-        [SerializeField] private GameObject m_slotPrefab;
-        [SerializeField] private GameObject m_panel;
-        [SerializeField] private RecipeDatabase m_recipeDatabase;
-        [SerializeField] private Inventory m_inventory;
-        [SerializeField] private InventoryUI m_inventoryUI;
+        [SerializeField] private GameObject slotPrefab;
+        [SerializeField] private GameObject panel;
+        [SerializeField] private RecipeDatabase recipeDatabase;
+        [SerializeField] private Inventory inventory;
+        [SerializeField] private InventoryUI inventoryUI;
 
-        private Transform m_gridParent;
+        private Transform gridParent;
 
         private void Awake()
         {
-            var grid = m_panel.GetComponentInChildren<GridLayoutGroup>();
+            var grid = panel.GetComponentInChildren<GridLayoutGroup>();
 
             if (grid != null)
             {
-                m_gridParent = grid.transform;
+                gridParent = grid.transform;
             }
             else
             {
@@ -35,8 +35,8 @@ namespace SubnauticaClone
 
         private void Start()
         {
-            if (m_panel != null)
-                m_panel.SetActive(false);
+            if (panel != null)
+                panel.SetActive(false);
 
             Refresh();
         }
@@ -44,7 +44,7 @@ namespace SubnauticaClone
         public void Toggle()
         {
             isOpen = !isOpen;
-            m_panel.SetActive(isOpen);
+            panel.SetActive(isOpen);
 
             if (isOpen)
                 Refresh();
@@ -53,13 +53,13 @@ namespace SubnauticaClone
         private void Refresh()
         {
             // Clear previous UI
-            foreach (Transform child in m_gridParent)
+            foreach (Transform child in gridParent)
                 Destroy(child.gameObject);
 
             // Populate UI
-            foreach (var recipe in m_recipeDatabase.allRecipes)
+            foreach (var recipe in recipeDatabase.allRecipes)
             {
-                var slot = Instantiate(m_slotPrefab, m_gridParent);
+                var slot = Instantiate(slotPrefab, gridParent);
                 var craftingSlot = slot.GetComponent<MenuItemSetup>();
                 craftingSlot.Setup(recipe.icon);
                 bool canCraft = CanCraft(recipe);
@@ -67,7 +67,7 @@ namespace SubnauticaClone
                 craftingSlot.InteractButton.onClick.AddListener(() => OnClickSlot(recipe));
             }
 
-            LayoutRebuilder.ForceRebuildLayoutImmediate(m_gridParent.GetComponent<RectTransform>());
+            LayoutRebuilder.ForceRebuildLayoutImmediate(gridParent.GetComponent<RectTransform>());
         }
 
         public void OnClickSlot(RecipeData recipe)
@@ -86,7 +86,7 @@ namespace SubnauticaClone
         {
             foreach (var ingredient in recipe.ingredients)
             {
-                if (!m_inventory.HasItem(ingredient.item, ingredient.amount))
+                if (!inventory.HasItem(ingredient.item, ingredient.amount))
                     return false;
             }
             return true;
@@ -96,10 +96,10 @@ namespace SubnauticaClone
         {
             foreach (var ingredient in recipe.ingredients)
             {
-                m_inventory.RemoveItem(ingredient.item, ingredient.amount);
+                inventory.RemoveItem(ingredient.item, ingredient.amount);
             }
-            m_inventory.AddItem(recipe.resultItem, recipe.resultAmount);
-            m_inventoryUI.Refresh();
+            inventory.AddItem(recipe.resultItem, recipe.resultAmount);
+            inventoryUI.Refresh();
             Refresh();
         }
     }

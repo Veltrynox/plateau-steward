@@ -9,7 +9,7 @@ namespace SubnauticaClone
     public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
     {
         [Header("Singleton")]
-        [SerializeField] private bool m_DoNotDestroyOnLoad;
+        [SerializeField] private bool doNotDestroyOnLoad;
         public static T Instance { get; private set; }
 
         #region Unity events
@@ -25,7 +25,7 @@ namespace SubnauticaClone
 
             Instance = this as T;
 
-            if (m_DoNotDestroyOnLoad)
+            if (doNotDestroyOnLoad)
                 DontDestroyOnLoad(gameObject);
         }
 

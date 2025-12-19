@@ -8,12 +8,12 @@ namespace SubnauticaClone
     public class LevelBuilder : SingletonBase<LevelBuilder>
     {
         [Header("Prefabs")]
-        [SerializeField] private GameObject m_playerHUDPrefab;
-        [SerializeField] private GameObject m_levelGUIPrefab;
-        [SerializeField] private GameObject m_gameManagerPrefab;
+        [SerializeField] private GameObject playerHUDPrefab;
+        [SerializeField] private GameObject levelGUIPrefab;
+        [SerializeField] private GameObject gameManagerPrefab;
 
         [Header("Dependencies")]
-        [SerializeField] private PlayerSpawner m_playerSpawner;
+        [SerializeField] private PlayerSpawner playerSpawner;
 
         public GameObject PlayerHUD { get; private set; }
         public GameObject LevelGUI { get; private set; }
@@ -26,12 +26,12 @@ namespace SubnauticaClone
         {
             base.Awake();
 
-            PlayerHUD = Instantiate(m_playerHUDPrefab);
-            LevelGUI = Instantiate(m_levelGUIPrefab);
-            GameManager = Instantiate(m_gameManagerPrefab);
+            PlayerHUD = Instantiate(playerHUDPrefab);
+            LevelGUI = Instantiate(levelGUIPrefab);
+            GameManager = Instantiate(gameManagerPrefab);
 
-            m_playerSpawner.Spawn(PlayerHUD);
-            Player = m_playerSpawner.Player;
+            playerSpawner.Spawn(PlayerHUD);
+            Player = playerSpawner.Player;
         }
         #endregion
     }

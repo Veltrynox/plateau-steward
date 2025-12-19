@@ -6,16 +6,16 @@ namespace SubnauticaClone
     public class InventoryUI : MonoBehaviour
     {
         [Header("UI")]
-        [SerializeField] private GameObject m_slotPrefab;
-        [SerializeField] private GameObject m_panel;
-        [SerializeField] private InventoryMenu m_inventoryMenuUI;
-        [SerializeField] private Inventory m_inventory;
+        [SerializeField] private GameObject slotPrefab;
+        [SerializeField] private GameObject panel;
+        [SerializeField] private InventoryMenu inventoryMenuUI;
+        [SerializeField] private Inventory inventory;
 
         private Transform m_gridParent;
 
         private void Awake()
         {
-            var grid = m_panel.GetComponentInChildren<GridLayoutGroup>();
+            var grid = panel.GetComponentInChildren<GridLayoutGroup>();
             if (grid != null)
             {
                 m_gridParent = grid.transform;
@@ -25,7 +25,7 @@ namespace SubnauticaClone
                 Debug.LogError("InventoryUI: Could not find GridLayoutGroup in children.");
             }
 
-            if (m_panel != null) m_panel.SetActive(false);
+            if (panel != null) panel.SetActive(false);
         }
 
         private bool isOpen = false;
@@ -33,7 +33,7 @@ namespace SubnauticaClone
         public void Toggle()
         {
             isOpen = !isOpen;
-            m_panel.SetActive(isOpen);
+            panel.SetActive(isOpen);
             if (isOpen) Refresh();
         }
 
@@ -42,22 +42,22 @@ namespace SubnauticaClone
             foreach (Transform child in m_gridParent)
                 Destroy(child.gameObject);
 
-            foreach (var item in m_inventory.items)
+            foreach (var item in inventory.items)
             {
-                var slot = Instantiate(m_slotPrefab, m_gridParent);
+                var slot = Instantiate(slotPrefab, m_gridParent);
                 var inventorySlot = slot.GetComponent<MenuItemSetup>();
 
                 inventorySlot.Setup(item.itemData.icon, item.quantity);
 
                 inventorySlot.InteractButton.onClick.AddListener(() =>
-                    m_inventoryMenuUI.Open(item.itemData.itemName, () => DropItem(item))
+                    inventoryMenuUI.Open(item.itemData.itemName, () => DropItem(item))
                 );
             }
         }
 
         private void DropItem(InventoryItem item)
         {
-            m_inventory.RemoveItem(item.itemData, 1);
+            inventory.RemoveItem(item.itemData, 1);
             SpawnItemInWorld(item.itemData);
             Refresh();
         }

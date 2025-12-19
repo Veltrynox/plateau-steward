@@ -8,28 +8,28 @@ namespace SubnauticaClone
 {
     public class PauseUI : MonoBehaviour
     {
-        [SerializeField] private Button m_resumeButton;
-        [SerializeField] private Button m_restartButton;
-        [SerializeField] private GameObject m_pauseMenuUI;
-        [SerializeField] private Button m_quitButton;
+        [SerializeField] private Button resumeButton;
+        [SerializeField] private Button restartButton;
+        [SerializeField] private GameObject pauseMenuUI;
+        [SerializeField] private Button quitButton;
         
         private void Start()
         {
             GameManager.Instance.OnPauseStateChanged += SetPauseMenuVisibility;
 
-            if (m_resumeButton != null)
+            if (resumeButton != null)
             {
-                m_resumeButton.onClick.AddListener(ResumeGame);
+                resumeButton.onClick.AddListener(ResumeGame);
             }
 
-            if (m_restartButton != null)
+            if (restartButton != null)
             {
-                m_restartButton.onClick.AddListener(RestartGame);
+                restartButton.onClick.AddListener(RestartGame);
             }
 
-            if (m_quitButton != null)
+            if (quitButton != null)
             {
-                m_quitButton.onClick.AddListener(QuitGame);
+                quitButton.onClick.AddListener(QuitGame);
             }
         
             SetPauseMenuVisibility(GameManager.Instance.IsPaused);
@@ -40,17 +40,17 @@ namespace SubnauticaClone
             if (GameManager.Instance != null)
             {
                 GameManager.Instance.OnPauseStateChanged -= SetPauseMenuVisibility;
-                if (m_resumeButton != null)
+                if (resumeButton != null)
                 {
-                    m_resumeButton.onClick.RemoveListener(ResumeGame);
+                    resumeButton.onClick.RemoveListener(ResumeGame);
                 }
-                if (m_restartButton != null)
+                if (restartButton != null)
                 {
-                    m_restartButton.onClick.RemoveListener(RestartGame);
+                    restartButton.onClick.RemoveListener(RestartGame);
                 }
-                if (m_quitButton != null)
+                if (quitButton != null)
                 {
-                    m_quitButton.onClick.RemoveListener(QuitGame);
+                    quitButton.onClick.RemoveListener(QuitGame);
                 }
             }
         }
@@ -72,7 +72,7 @@ namespace SubnauticaClone
 
         private void SetPauseMenuVisibility(bool isPaused)
         {
-            m_pauseMenuUI.SetActive(isPaused);
+            pauseMenuUI.SetActive(isPaused);
         }
     }
 }

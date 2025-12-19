@@ -6,15 +6,15 @@ namespace SubnauticaClone
 {
     public class InventoryMenu : MonoBehaviour
     {
-        [SerializeField] private Button m_dropButton;
+        [SerializeField] private Button dropButton;
 
         public void Open(string itemName, Action onDropAction)
         {
             gameObject.SetActive(true);
 
-            m_dropButton.onClick.RemoveAllListeners();
+            dropButton.onClick.RemoveAllListeners();
 
-            m_dropButton.onClick.AddListener(() =>
+            dropButton.onClick.AddListener(() =>
             {
                 onDropAction?.Invoke();
                 Close();

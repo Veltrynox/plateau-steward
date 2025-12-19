@@ -12,7 +12,7 @@ namespace SubnauticaClone
         [Header("References")]
         [SerializeField] private Inventory inventory;
         private PlayerInput playerInput;
-        private GameObject m_menuGUI;
+        private GameObject menuGUI;
 
         [Header("Settings")]
         [SerializeField] private string gameplayMapName = "Player";
@@ -23,23 +23,23 @@ namespace SubnauticaClone
         private void Start()
         {
             CloseInventory();
-            m_menuGUI = LevelBuilder.Instance.LevelGUI;
+            menuGUI = LevelBuilder.Instance.LevelGUI;
             playerInput = GetComponent<PlayerInput>();
         }
 
         private void OnInventory(InputValue value)
         {
-            if (m_menuGUI == null)
+            if (menuGUI == null)
                 return;
             
             isPaused = !isPaused;
 
 
-            var inventory = m_menuGUI.GetComponentInChildren<InventoryUI>(true);
+            var inventory = menuGUI.GetComponentInChildren<InventoryUI>(true);
             if (inventory != null)
                 inventory.Toggle();
 
-            var crafting = m_menuGUI.GetComponentInChildren<CraftingUI>(true);
+            var crafting = menuGUI.GetComponentInChildren<CraftingUI>(true);
             if (crafting != null)
                 crafting.Toggle();
 

@@ -8,18 +8,18 @@ namespace SubnauticaClone
     public class PlayerSpawner : MonoBehaviour
     {
         [Header("Prefab")]
-        [SerializeField] private GameObject m_PlayerPrefab;
-        [SerializeField] private Transform m_SpawnPoint;
+        [SerializeField] private GameObject playerPrefab;
+        [SerializeField] private Transform spawnPoint;
 
         public GameObject Player { get; private set; }
 
         public void Spawn(GameObject hud)
         {
-            Player = Instantiate(m_PlayerPrefab);
+            Player = Instantiate(playerPrefab);
             Player.transform.parent = transform;
             Player playerComponent = Player.GetComponent<Player>();
-            Player.transform.position = m_SpawnPoint.position;
-            playerComponent.Construct(hud, m_SpawnPoint.rotation, m_SpawnPoint.position);
+            Player.transform.position = spawnPoint.position;
+            playerComponent.Construct(hud, spawnPoint.rotation, spawnPoint.position);
         }
     }
 }

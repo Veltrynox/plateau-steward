@@ -31,7 +31,7 @@ namespace SubnauticaClone
         }
     }
 
-    [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory/System")]
+    [CreateAssetMenu(fileName = "New Inventory", menuName = "PS/Inventory/System")]
     public class Inventory : ScriptableObject
     {
         public int capacity = 20;
