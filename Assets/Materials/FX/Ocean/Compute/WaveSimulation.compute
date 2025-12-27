@@ -1,0 +1,83 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+RWTexture2D<float4> ResultNormal;
+
+struct WaveParam
+{
+    float steepness;
+    float wavelength;
+    float speed;
+    float directionAngle;
+};
+
+StructuredBuffer<WaveParam> _WaveDataBuffer;
+int _WaveCount;
+float _Time;
+float _PatchSize;
+float3 _PatchCenter;
+int _Resolution;
+
+#define PI 3.14159265359
+
+// Basic Gerstner Wave Calculation
+float3 GerstnerWave(float3 position, WaveParam wave, inout float3 tangent, inout float3 binormal)
+{
+    float k = 2 * PI / wave.wavelength;
+    float c = wave.speed;
+    
+    float rad = wave.directionAngle * (PI / 180.0);
+    float2 d = float2(cos(rad), sin(rad));
+
+    float f = k * (dot(d, position.xz)) - c * _Time;
+    float a = wave.steepness / k; 
+
+    float s = sin(f);
+    float c_s = cos(f);
+
+    // --- Displacement ---
+    float3 displacement;
+    displacement.x = d.x * (a * c_s);
+    displacement.y = a * s;
+    displacement.z = d.y * (a * c_s);
+
+    float derivativeInput = k * a * s;
+    
+    tangent.x -= d.x * d.x * (k * a * s);
+    tangent.y += d.x * (k * a * c_s); 
+    tangent.z -= d.x * d.y * (k * a * s);
+
+    binormal.x -= d.x * d.y * (k * a * s);
+    binormal.y += d.y * (k * a * c_s);
+    binormal.z -= d.y * d.y * (k * a * s);
+
+    return displacement;
+}
+
+[numthreads(8,8,1)]
+void CSMain (uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= (uint)_Resolution || id.y >= (uint)_Resolution)
+        return;
+
+    float2 uv = float2(id.xy) / float(_Resolution);
+
+    float3 worldPos = _PatchCenter;
+    worldPos.x += (uv.x - 0.5) * _PatchSize;
+    worldPos.z += (uv.y - 0.5) * _PatchSize;
+    
+    float3 finalDisplacement = float3(0,0,0);
+    
+    float3 tangent = float3(1, 0, 0);
+    float3 binormal = float3(0, 0, 1);
+
+    for (int i = 0; i < _WaveCount; i++)
+    {
+       finalDisplacement += GerstnerWave(worldPos, _WaveDataBuffer[i], tangent, binormal);
+    }
+    
+    float3 normal = normalize(cross(binormal, tangent));
+
+    Result[id.xy] = float4(finalDisplacement, 1.0);
+    ResultNormal[id.xy] = float4(normal, 1.0);
+}
